@@ -1,5 +1,5 @@
 {
-  "name": "gulp-browserify-builds",
+  "name": "gulp-task-library",
   "version": "0.0.0",
   "scripts": {
     "test": "gulp test"
@@ -11,21 +11,26 @@
     "gulp-istanbul": "^0.5.0",
     "gulp-mocha": "^2.0.0"
   },
-  "description": "",
-  "main": "gulpfile.js",
+  "description": "Browserify and Watchify builds done for you in Gulp with minimal configuration.",
+  "main": "source/index.js",
   "dependencies": {
     "gulp": "^3.8.10",
-    "gulp-eslint": "^0.2.0",
-    "gulp-istanbul": "^0.5.0",
-    "gulp-mocha": "^2.0.0"
+    "gulp-browserify-mangle": "^0.1.2",
+    "gulp-foreach": "^0.1.0",
+    "gulp-if": "^1.2.5",
+    "gulp-rename": "^1.2.0",
+    "gulp-sourcemaps": "^1.3.0",
+    "gulp-uglify": "^1.1.0",
+    "vinyl-source-stream": "^1.0.0",
+    "watchify": "^2.2.1"
   },
   "repository": {
     "type": "git",
-    "url": "https://github.com/booleangate/gulp-browserify-builds.git"
+    "url": "https://github.com/booleangate/gulp-task-library.git"
   },
   "author": "Justin Johnson <booleangate@gmail.com> (http://justinjohnson.org/)",
   "bugs": {
-    "url": "https://github.com/booleangate/gulp-browserify-builds/issues"
+    "url": "https://github.com/booleangate/gulp-task-library/issues"
   },
-  "homepage": "https://github.com/booleangate/gulp-browserify-builds"
+  "homepage": "https://github.com/booleangate/gulp-task-library"
 }
