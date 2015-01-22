@@ -1,7 +1,6 @@
 {
-  "name": "your-project-name-here",
-  "version": "0.1.0",
-  "private": true,
+  "name": "gulp-browserify-utils",
+  "version": "0.0.0",
   "scripts": {
     "test": "gulp test"
   },
@@ -12,7 +11,21 @@
     "gulp-istanbul": "^0.5.0",
     "gulp-mocha": "^2.0.0"
   },
+  "description": "",
+  "main": "gulpfile.js",
   "dependencies": {
-    "shelljs": "^0.3.0"
-  }
+    "gulp": "^3.8.10",
+    "gulp-eslint": "^0.2.0",
+    "gulp-istanbul": "^0.5.0",
+    "gulp-mocha": "^2.0.0"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/booleangate/gulp-browserify-utils.git"
+  },
+  "author": "Justin Johnson <booleangate@gmail.com> (http://justinjohnson.org/)",
+  "bugs": {
+    "url": "https://github.com/booleangate/gulp-browserify-utils/issues"
+  },
+  "homepage": "https://github.com/booleangate/gulp-browserify-utils"
 }
