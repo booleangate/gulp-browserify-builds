@@ -55,7 +55,7 @@ var linters = {
     }
 };
 
-function doLint(stream, config) {
+function lint(source, config, automatic) {
     // Make sure config is correct.
     if (!config) {
         config = {};
@@ -71,17 +71,11 @@ function doLint(stream, config) {
     // Ensure that we have the expected keys for the selected linter
     extend(true, config, DEFAULT_CONFIGS[linter]);
     
+    var stream = automatic ? watch(source) : gulp.src(source);
+    
     // Execute the selected linter.
     return linters[linter](stream, config);
 }
 
 
-module.exports = {
-	manual: function(source, config) {
-		return doLint(gulp.src(source), config);
-	},
-	
-	watch: function(source, config) {
-		return doLint(watch(source), config);
-	}
-}; 
+module.exports = lint;
