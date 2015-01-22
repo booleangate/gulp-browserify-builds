@@ -1,5 +1,6 @@
 /**
  * Browserify and watchify builds.
+ * Options: https://github.com/substack/node-browserify#methods
  */
 "use strict";
 
