@@ -1,5 +1,5 @@
 {
-  "name": "gulp-browserify-utils",
+  "name": "gulp-browserify-builds",
   "version": "0.0.0",
   "scripts": {
     "test": "gulp test"
@@ -21,11 +21,11 @@
   },
   "repository": {
     "type": "git",
-    "url": "https://github.com/booleangate/gulp-browserify-utils.git"
+    "url": "https://github.com/booleangate/gulp-browserify-builds.git"
   },
   "author": "Justin Johnson <booleangate@gmail.com> (http://justinjohnson.org/)",
   "bugs": {
-    "url": "https://github.com/booleangate/gulp-browserify-utils/issues"
+    "url": "https://github.com/booleangate/gulp-browserify-builds/issues"
   },
-  "homepage": "https://github.com/booleangate/gulp-browserify-utils"
+  "homepage": "https://github.com/booleangate/gulp-browserify-builds"
 }
