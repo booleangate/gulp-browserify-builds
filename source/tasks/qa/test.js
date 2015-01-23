@@ -52,7 +52,7 @@ var PROVIDERS = {
 
 function test(stream, config) {
     return stream.pipe(
-        PROVIDERS[config.provider](config.test.options)
+        PROVIDERS[config.provider](config.options)
     );
 }
 
@@ -71,7 +71,7 @@ function testCoverage(stream, config, source, onComplete) {
         });
 }
 
-exports.test = function(source, config, isAutomatic) {
+module.exports = function(source, config, isAutomatic) {
     config = utils.configure("test", config, DEFAULT_CONFIG, DEFAULT_PROVIDER_CONFIGS);
     
     var stream = isAutomatic ? watch(source) : gulp.src(source);

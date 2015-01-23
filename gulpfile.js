@@ -5,13 +5,14 @@
 var gulp = require("gulp");
 var taskLib = require("./");
 
-var SOURCE_ALL = ["source/**/*.js", "gulpfile.js"];
+var SOURCE_APP = ["source/**/*.js"];
+var SOURCE_ALL = SOURCE_APP.concat(["test/**/*.js", "gulpfile.js"]);
 
 
 /**
  * Linting
  */
-var esLintOptions = {
+var eslintOptions = {
     provider: "eslint",
     options: {
         envs: ["mocha", "node"]
@@ -24,11 +25,45 @@ var jsHintOptions = {
 
 gulp.task("lint", ["eslint"]);
 gulp.task("autolint", ["autoeslint"]);
-
-gulp.task("eslint", taskLib.qa.lint(SOURCE_ALL, esLintOptions));
-gulp.task("autoeslint", taskLib.qa.lint(SOURCE_ALL, esLintOptions, true));
+gulp.task("eslint", taskLib.qa.lint(SOURCE_ALL, eslintOptions));
+gulp.task("autoeslint", taskLib.qa.lint(SOURCE_ALL, eslintOptions, true));
 
 gulp.task("jshint", taskLib.qa.lint(SOURCE_ALL, jsHintOptions));
 gulp.task("autojshint", taskLib.qa.lint(SOURCE_ALL, jsHintOptions, true));
+
+
+
+/**
+ * Testing
+ */
+var mochaTddOptions = {
+    provider: "mocha",
+    options: {
+        ui: "tdd"
+    }
+};
+var mochaBddOptions = {
+    provider: "mocha",
+    options: {
+        ui: "bdd"
+    }
+};
+
+var jasmineOptions = {
+    provider: "jasmine"
+};
+
+gulp.task("test", ["mochatdd"]);
+gulp.task("autotest", ["automochatdd"]);
+
+gulp.task("mochatdd", taskLib.qa.test(["test/**/*-tdd.js"], mochaTddOptions));
+gulp.task("automochatdd", taskLib.qa.test(["test/**/*-tdd.js"], mochaTddOptions, true));
+
+gulp.task("mochabdd", taskLib.qa.test(["test/**/*-bdd.js"], mochaBddOptions));
+gulp.task("automochabdd", taskLib.qa.test(["test/**/*-bdd.js"], mochaBddOptions, true));
+
+gulp.task("jasmine", taskLib.qa.test(["test/**/*-bdd.js"], jasmineOptions));
+gulp.task("autojasmine", taskLib.qa.test(["test/**/*-bdd.js"], jasmineOptions, true));
+
 
 gulp.task("default", ["lint"]);
