@@ -51,9 +51,9 @@ var PROVIDERS = {
 };
 
 function test(stream, config) {
-    return stream.pipe(
-        PROVIDERS[config.provider](config.options)
-    );
+    var tester = PROVIDERS[config.provider];
+
+    return stream.pipe(tester(config.options));
 }
 
 function testCoverage(stream, config, source, onComplete) {
@@ -72,17 +72,17 @@ function testCoverage(stream, config, source, onComplete) {
 }
 
 module.exports = function(source, config, isAutomatic) {
-    config = utils.configure("test", config, DEFAULT_CONFIG, DEFAULT_PROVIDER_CONFIGS);
-    
-    var stream = isAutomatic ? watch(source) : gulp.src(source);
-    
-    if (config.coverage.enable) {
-        return function(onComplete) {
-            testCoverage(stream, config, source, onComplete);
-        };
-    }
-    
     return function() {
+        config = utils.configure("test", config, DEFAULT_CONFIG, DEFAULT_PROVIDER_CONFIGS);
+        
+        var stream = isAutomatic ? watch(source) : gulp.src(source);
+        
+        if (config.coverage.enable) {
+            return function(onComplete) {
+                testCoverage(stream, config, source, onComplete);
+            };
+        }
+        
         return test(stream, config);
     };
 };
