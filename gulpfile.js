@@ -53,17 +53,20 @@ var jasmineOptions = {
     provider: "jasmine"
 };
 
+var tddTests = ["test/**/*-tdd.js"];
+var bddTests = ["test/**/*-bdd.js"];
+
 gulp.task("test", ["mochatdd"]);
 gulp.task("autotest", ["automochatdd"]);
 
-gulp.task("mochatdd", taskLib.qa.test(["test/**/*-tdd.js"], mochaTddOptions));
-gulp.task("automochatdd", taskLib.qa.test(["test/**/*-tdd.js"], mochaTddOptions, true));
+gulp.task("mochatdd", taskLib.qa.test(tddTests, mochaTddOptions));
+gulp.task("automochatdd", taskLib.qa.test(tddTests, mochaTddOptions, true));
 
-gulp.task("mochabdd", taskLib.qa.test(["test/**/*-bdd.js"], mochaBddOptions));
-gulp.task("automochabdd", taskLib.qa.test(["test/**/*-bdd.js"], mochaBddOptions, true));
+gulp.task("mochabdd", taskLib.qa.test(bddTests, mochaBddOptions));
+gulp.task("automochabdd", taskLib.qa.test(bddTests, mochaBddOptions, true));
 
-gulp.task("jasmine", taskLib.qa.test(["test/**/*-bdd.js"], jasmineOptions));
-gulp.task("autojasmine", taskLib.qa.test(["test/**/*-bdd.js"], jasmineOptions, true));
+gulp.task("jasmine", taskLib.qa.test(bddTests, jasmineOptions));
+gulp.task("autojasmine", taskLib.qa.test(bddTests, jasmineOptions, true));
 
 
 gulp.task("default", ["lint"]);
