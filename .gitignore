@@ -4,3 +4,4 @@ test/coverage
 .DS_Store
 .project
 .settings/
+gulp-task-library.sublime-workspace

@@ -1,0 +1,45 @@
+body {
+	font-family: verdana;
+	font-size: 14px;
+	font-weight: normal;
+};
+
+h1 {
+	font-size: 2em;
+	font-weight: bold;
+}
+
+h2 {
+	font-size: 2em;
+}
+
+h3 {
+	font-size: 1.66em;
+	font-weight: bold;
+}
+
+h4 {
+	font-size: 1.66em;
+}
+
+h5 {
+	font-size: 1.33em;
+	font-weight: bold;
+}
+
+h5 {
+	font-size: 1.33em;
+}
+
+a {
+	color: orange;
+	text-decoration: none;
+}
+
+a:hover {
+	text-decoration: underline;
+}
+
+label, button {
+	cursor: pointer;
+}

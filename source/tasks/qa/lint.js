@@ -2,9 +2,7 @@
 
 var defaultTestProvider = require("./test").defaultProvider;
 var gif = require("gulp-if");
-var gulp = require("gulp");
 var utils = require("../utils");
-var watch = require("gulp-watch");
 
 var DEFAULT_PROVIDER_CONFIGS = {
 	eslint: {
@@ -14,8 +12,10 @@ var DEFAULT_PROVIDER_CONFIGS = {
 		// ES Lint options
 		options: {
 			rules: {
-				// Removing whitespace is handled by build tasks
-				"no-trailing-spaces": 0
+				// Removing whitespace is handled by build tasks.
+				"no-trailing-spaces": 0,
+				// Allow named function definitions to be used before they are defined.
+				"no-use-before-define": [1, "nofunc"]
 			},
 			envs: [defaultTestProvider]
 		}
@@ -62,16 +62,6 @@ var PROVIDERS = {
     }
 };
 
-
-module.exports = function(source, config, isAutomatic) {
-    return function() {
-        config = utils.configure("test", config, DEFAULT_CONFIG, DEFAULT_PROVIDER_CONFIGS);
-        
-        var stream = isAutomatic ? watch(source) : gulp.src(source);
-        
-        // Execute the selected lint provider.
-        return PROVIDERS[config.provider](stream, config, isAutomatic);
-    };
-};
+module.exports = utils.configurableProviderTaskFactory("lint", DEFAULT_CONFIG, DEFAULT_PROVIDER_CONFIGS, PROVIDERS);
 
 module.exports.defaultProvider = DEFAULT_CONFIG.provider;

@@ -3,7 +3,7 @@
 "use strict";
 
 var gulp = require("gulp");
-var taskLib = require("./");
+var tasks = require("./");
 
 var SOURCE_APP = ["source/**/*.js"];
 var SOURCE_ALL = SOURCE_APP.concat(["test/**/*.js", "gulpfile.js"]);
@@ -25,12 +25,11 @@ var jsHintOptions = {
 
 gulp.task("lint", ["eslint"]);
 gulp.task("autolint", ["autoeslint"]);
-gulp.task("eslint", taskLib.qa.lint(SOURCE_ALL, eslintOptions));
-gulp.task("autoeslint", taskLib.qa.lint(SOURCE_ALL, eslintOptions, true));
+gulp.task("eslint", tasks.qa.lint(SOURCE_ALL, eslintOptions));
+gulp.task("autoeslint", tasks.qa.lint(SOURCE_ALL, eslintOptions, true));
 
-gulp.task("jshint", taskLib.qa.lint(SOURCE_ALL, jsHintOptions));
-gulp.task("autojshint", taskLib.qa.lint(SOURCE_ALL, jsHintOptions, true));
-
+gulp.task("jshint", tasks.qa.lint(SOURCE_ALL, jsHintOptions));
+gulp.task("autojshint", tasks.qa.lint(SOURCE_ALL, jsHintOptions, true));
 
 
 /**
@@ -56,17 +55,27 @@ var jasmineOptions = {
 var tddTests = ["test/**/*-tdd.js"];
 var bddTests = ["test/**/*-bdd.js"];
 
-gulp.task("test", ["mochatdd"]);
-gulp.task("autotest", ["automochatdd"]);
+// gulp.task("test", ["mochatdd"]);
+// gulp.task("autotest", ["automochatdd"]);
 
-gulp.task("mochatdd", taskLib.qa.test(tddTests, mochaTddOptions));
-gulp.task("automochatdd", taskLib.qa.test(tddTests, mochaTddOptions, true));
+// gulp.task("mochatdd", tasks.qa.test(tddTests, mochaTddOptions));
+// gulp.task("automochatdd", tasks.qa.test(tddTests, mochaTddOptions, true));
 
-gulp.task("mochabdd", taskLib.qa.test(bddTests, mochaBddOptions));
-gulp.task("automochabdd", taskLib.qa.test(bddTests, mochaBddOptions, true));
+// gulp.task("mochabdd", tasks.qa.test(bddTests, mochaBddOptions));
+// gulp.task("automochabdd", tasks.qa.test(bddTests, mochaBddOptions, true));
 
-gulp.task("jasmine", taskLib.qa.test(bddTests, jasmineOptions));
-gulp.task("autojasmine", taskLib.qa.test(bddTests, jasmineOptions, true));
+// gulp.task("jasmine", tasks.qa.test(bddTests, jasmineOptions));
+// gulp.task("autojasmine", tasks.qa.test(bddTests, jasmineOptions, true));
+
+
+/*
+ * JS Builds
+ */
+ gulp.task("concatjs", tasks.build.js.concat(SOURCE_APP, {
+    filename: "concatedness.js",
+    dest: "./",
+    verbose: true
+}));
 
 
 gulp.task("default", ["lint"]);

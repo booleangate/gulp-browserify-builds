@@ -2,7 +2,9 @@
 
 var debug = require("gulp-debug");
 var gif = require("gulp-if");
+var gulp = require("gulp");
 var util = require("util");
+var watch = require("gulp-watch");
 
 function merge(dest, src) {
     Object.keys(src).forEach(function(key) {
@@ -15,7 +17,7 @@ function merge(dest, src) {
     });
 }
 
-exports.configure = function setProviderConfig(type, config, defaultConfig, providerConfigs) {
+function configure(type, config, defaultConfig, providerConfigs) {
     // No config? Use empty object.
     if (!config) {
         config = {};
@@ -29,18 +31,41 @@ exports.configure = function setProviderConfig(type, config, defaultConfig, prov
     var provider = config.provider;
     
     // Invalid provider? Error out.
-    if (!providerConfigs[provider]) {
+    if (providerConfigs && !providerConfigs[provider]) {
         throw new Error("Unknown " + type + " provider '" + provider + "'");
     }
     
     // Merge in all default configuration options.
     merge(config, defaultConfig);
+
     // Merge in all provider specific default configuration options.
-    merge(config, providerConfigs[provider]);
+    if (providerConfigs) {
+       merge(config, providerConfigs[provider]);
+    }
     
     return config;
-};
+}
 
-exports.verboseFileLog = function(title, isVerbose, isAutomatic) {
+function configurableProviderTaskFactory(type, defaultConfig, defaultProviderConfigs, providers) {
+    return function(source, config, isAutomatic) {
+        return function() {
+            config = configure(type, config, defaultConfig, defaultProviderConfigs);
+            
+            var stream = isAutomatic ? watch(source) : gulp.src(source);
+            
+            // Execute the selected lint provider.
+            return providers[config.provider](stream, config, isAutomatic);
+        };
+    };
+}
+
+function verboseFileLog(title, isVerbose, isAutomatic) {
     return gif(isAutomatic || isVerbose, debug({title: title}));
-};
+}
+
+module.exports = {
+    merge: merge,
+    configure: configure,
+    configurableProviderTaskFactory: configurableProviderTaskFactory,
+    verboseFileLog: verboseFileLog
+};  
