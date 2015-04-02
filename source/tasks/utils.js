@@ -6,6 +6,10 @@ var gulp = require("gulp");
 var util = require("util");
 var watch = require("gulp-watch");
 
+function clone(obj) {
+    return JSON.parse(JSON.stringify(obj));
+}
+
 function merge(dest, src) {
     Object.keys(src).forEach(function(key) {
         if (typeof dest[key] === "undefined") {
@@ -64,8 +68,10 @@ function verboseFileLog(title, isVerbose, isAutomatic) {
 }
 
 module.exports = {
-    merge: merge,
+    clone: clone,
     configure: configure,
     configurableProviderTaskFactory: configurableProviderTaskFactory,
+    merge: merge,
+    noop: function noop() {},
     verboseFileLog: verboseFileLog
 };  

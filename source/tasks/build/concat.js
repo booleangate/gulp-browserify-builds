@@ -32,18 +32,18 @@ function configureDeflator(deflatorConfig, deflateModule) {
 		return deflatorConfig;
 	}
 
-	// Merge default config with provided deflatorConfig
-	utils.merge(deflatorConfig, deflateModule.DEFAULT_CONFIG);
+	var config = utils.clone(deflatorConfig);
 
-	return deflateModule.getDeflator(deflatorConfig);
+	// Merge default config with provided deflatorConfig
+	utils.merge(config, deflateModule.DEFAULT_CONFIG);
+
+	return deflateModule.getDeflator(config);
 }
 
 module.exports = function(type, deflateModule) {
 	return function(source, config, isAutomatic) {
 		config = utils.configure("concat " + type, config, DEFAULT_CONFIG);
 		
-		var stream = isAutomatic ? watch(source) : gulp.src(source);
-
 		if (!config.dest) {
 			throw "concat" + type + ": must specifiy no destination.";
 		}
@@ -56,11 +56,13 @@ module.exports = function(type, deflateModule) {
 		
 		// Execute the selected lint provider.
 		return function() {
+			var stream = isAutomatic ? watch(source) : gulp.src(source);
+
 			return stream
 				.pipe(gif(config.verbose, size(config.sizeOptions)))
 				.pipe(concat(config.filename))
 				.pipe(gif(config.verbose, size(config.sizeOptions)))
-				.pipe(gif(config.deflator, config.deflator))
+				.pipe(gif(config.deflator, config.deflator || utils.noop))
 				.pipe(gif(config.deflator && config.verbose, size(config.sizeOptions)))
 				.pipe(gulp.dest(config.dest));
 		};

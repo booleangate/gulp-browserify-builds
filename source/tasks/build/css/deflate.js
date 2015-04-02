@@ -3,16 +3,14 @@
 var utils = require("../../utils");
 
 var DEFAULT_PROVIDER_CONFIGS = {
-	uglify: {
-        // Options from https://www.npmjs.com/package/gulp-uglify
-        options: {
-            preserveComments: "some"
-        }
+	"minify-css": {
+        // Options from https://www.npmjs.com/package/gulp-minify-css
+        options: {}
 	}
 };
 
 var DEFAULT_CONFIG = {
-    provider: "uglify",
+    provider: "minify-css",
 
     // The rest will be merged in from DEFAULT_PROVIDER_CONFIGS for the selected deflator
 
@@ -21,7 +19,7 @@ var DEFAULT_CONFIG = {
 };
 
 var PROVIDERS = {
-    uglify: function deflate(stream, config, isAutomatic) {
+    "minify-css": function delate(stream, config, isAutomatic) {
         return stream
             .pipe(utils.verboseFileLog("Deflating", config.verbose, isAutomatic))
             .pipe(getDeflator(config));
@@ -29,17 +27,17 @@ var PROVIDERS = {
 };
 
 function getDeflator(config) {
-    if (config.provider === "uglify") {
-        var uglify = require("gulp-uglify");
+    if (config.provider === "minify-css") {
+        var minify = require("gulp-minify-css");
 
-        return uglify(config.options);
+        return minify(config.options);
     }
 
-    throw new Error("Unknown JS deflate provider: '" + config.provider + "'");
+    throw new Error("Unknown CSS deflate provider: '" + config.provider + "'");
 }
 
 
-module.exports = utils.configurableProviderTaskFactory("deflatejs", DEFAULT_CONFIG, DEFAULT_PROVIDER_CONFIGS, PROVIDERS);
+module.exports = utils.configurableProviderTaskFactory("deflatecss", DEFAULT_CONFIG, DEFAULT_PROVIDER_CONFIGS, PROVIDERS);
 
 module.exports.DEFAULT_CONFIG = DEFAULT_CONFIG;
 module.exports.getDeflator = getDeflator;

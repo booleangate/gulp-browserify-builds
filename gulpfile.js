@@ -41,6 +41,7 @@ var mochaTddOptions = {
         ui: "tdd"
     }
 };
+
 var mochaBddOptions = {
     provider: "mocha",
     options: {
@@ -55,27 +56,40 @@ var jasmineOptions = {
 var tddTests = ["test/**/*-tdd.js"];
 var bddTests = ["test/**/*-bdd.js"];
 
-// gulp.task("test", ["mochatdd"]);
-// gulp.task("autotest", ["automochatdd"]);
+gulp.task("test", ["mochatdd"]);
+gulp.task("autotest", ["automochatdd"]);
 
-// gulp.task("mochatdd", tasks.qa.test(tddTests, mochaTddOptions));
-// gulp.task("automochatdd", tasks.qa.test(tddTests, mochaTddOptions, true));
+gulp.task("mochatdd", tasks.qa.test(tddTests, mochaTddOptions));
+gulp.task("automochatdd", tasks.qa.test(tddTests, mochaTddOptions, true));
 
-// gulp.task("mochabdd", tasks.qa.test(bddTests, mochaBddOptions));
-// gulp.task("automochabdd", tasks.qa.test(bddTests, mochaBddOptions, true));
+gulp.task("mochabdd", tasks.qa.test(bddTests, mochaBddOptions));
+gulp.task("automochabdd", tasks.qa.test(bddTests, mochaBddOptions, true));
 
-// gulp.task("jasmine", tasks.qa.test(bddTests, jasmineOptions));
-// gulp.task("autojasmine", tasks.qa.test(bddTests, jasmineOptions, true));
-
+gulp.task("jasmine", tasks.qa.test(bddTests, jasmineOptions));
+gulp.task("autojasmine", tasks.qa.test(bddTests, jasmineOptions, true));
 
 /*
  * JS Builds
  */
- gulp.task("concatjs", tasks.build.js.concat(SOURCE_APP, {
+var concatJsOptions = {
     filename: "concatedness.js",
     dest: "./",
     verbose: true
-}));
+};
 
+gulp.task("concatjs", tasks.build.js.concat(SOURCE_APP, concatJsOptions));
+gulp.task("autoconcatjs", tasks.build.js.concat(SOURCE_APP, concatJsOptions, true));
+
+/*
+ * CSS Builds
+ */
+var concatCssOptions = {
+    filename: "concatedness.css",
+    dest: "./",
+    verbose: true
+};
+
+gulp.task("concatcss", tasks.build.css.concat(['test/fixture/css/*.css'], concatCssOptions));
+gulp.task("autoconcatcss", tasks.build.css.concat(['test/fixture/css/*.css'], concatCssOptions, true));
 
 gulp.task("default", ["lint"]);
