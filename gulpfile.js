@@ -89,7 +89,7 @@ var concatCssOptions = {
     verbose: true
 };
 
-gulp.task("concatcss", tasks.build.css.concat(['test/fixture/css/*.css'], concatCssOptions));
-gulp.task("autoconcatcss", tasks.build.css.concat(['test/fixture/css/*.css'], concatCssOptions, true));
+gulp.task("concatcss", tasks.build.css.concat(["test/fixture/css/*.css"], concatCssOptions));
+gulp.task("autoconcatcss", tasks.build.css.concat(["test/fixture/css/*.css"], concatCssOptions, true));
 
 gulp.task("default", ["lint"]);
