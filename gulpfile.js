@@ -71,6 +71,7 @@ gulp.task("autojasmine", tasks.qa.test(bddTests, jasmineOptions, true));
 /*
  * JS Builds
  */
+// Concat builds.
 var concatJsOptions = {
     filename: "concatedness.js",
     dest: "./",
@@ -79,6 +80,15 @@ var concatJsOptions = {
 
 gulp.task("concatjs", tasks.build.js.concat(SOURCE_APP, concatJsOptions));
 gulp.task("autoconcatjs", tasks.build.js.concat(SOURCE_APP, concatJsOptions, true));
+
+// Browserify builds.
+var browserifyOptions = {
+    dest: "./"
+};
+
+gulp.task("browserify", tasks.build.js.browserify(SOURCE_APP, browserifyOptions));
+gulp.task("autobrowserify", tasks.build.js.browserify(SOURCE_APP, browserifyOptions, true));
+gulp.task("watchify", ["autobrowserify"]);
 
 /*
  * CSS Builds
